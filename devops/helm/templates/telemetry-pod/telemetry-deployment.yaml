@@ -1,0 +1,29 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.app.prefix }}-telemetry
+  name: {{ .Values.app.prefix }}-telemetry
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.prefix }}-telemetry
+    spec:
+      containers:
+      - name: vault-container
+        image: vault
+        ports:
+        - containerPort: 8200
+          name: vaultport
+          protocol: TCP
+        securityContext:
+         capabilities:
+           add:
+             - IPC_LOCK
+        env:
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: vault-{{ .Values.app.prefix }}        

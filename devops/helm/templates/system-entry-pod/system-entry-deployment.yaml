@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.prefix }}-system-entry
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.prefix }}-system-entry
+    spec:
+      containers:
+        - name: nginx-container
+          imagePullPolicy: IfNotPresent
+          image: tharanirajan/{{ .Values.app.prefix }}-system-entry:1.0
+          ports:
+            - name: http-port
+              containerPort: 80

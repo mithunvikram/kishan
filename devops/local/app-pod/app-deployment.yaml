@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kishan-app
+  namespace: kishan
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kishan-app
+    spec:
+      containers:
+        - name: node-container
+          imagePullPolicy: Always
+          image: tharanirajan/kishan-app:2.0
+          ports:
+            - name: http-port
+              containerPort: 3000
+          env:
+            - name: kishan-app-db
+              value: kishan-app-db
+            - name: VAULT_API
+              value: "http://vault.kishan.svc.cluster.local:8200"  

@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.prefix }}-app
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.prefix }}-app
+    spec:
+      containers:
+        - name: node-container
+          imagePullPolicy: Always
+          image: tharanirajan/{{ .Values.app.prefix }}-app:1.0
+          ports:
+            - name: http-port
+              containerPort: 3000
+          env:
+            - name: {{ .Values.app.prefix }}-app-db
+              value: {{ .Values.app.prefix }}-app-db
+            - name: VAULT_API
+              value: "http://vault.{{ .Values.app.namespace }}.svc.cluster.local:8200"

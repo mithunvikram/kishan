@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kishan-system-entry
+  namespace: kishan
+spec:
+  type: NodePort
+  ports:
+  - name: nginx-app
+    port: 80
+    targetPort: 80
+  selector:
+    app: kishan-system-entry

@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kishan-app-db
+  namespace: kishan
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kishan-app-db
+    spec:
+      containers:
+        - name: mongo-container
+          imagePullPolicy: Always
+          image: mongo:3.2
+          ports:
+            - name: http-port
+              containerPort: 27017
+          volumeMounts:
+            - name: mongo
+              mountPath: /data/db
+      volumes:
+        - name: mongo
+          persistentVolumeClaim:
+            claimName: kishan-app-mongo-data

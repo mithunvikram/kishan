@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app.prefix }}-telemetry
+  labels:
+    app: {{ .Values.app.prefix }}-telemetry
+  namespace: {{ .Values.app.namespace }}  
+spec:
+  type: NodePort
+  ports:
+    - name: vault
+      targetPort: 8200
+      port: 8200
+  selector:
+    app: {{ .Values.app.prefix }}-telemetry 
